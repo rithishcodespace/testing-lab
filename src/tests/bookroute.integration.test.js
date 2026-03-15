@@ -43,4 +43,20 @@ describe("Integration tests for the books API", () => {
 
     })
 
+    test("POST /api/books - success", async() => {
+
+        const{body, statusCode} = await request(app).post("/api/books").send({
+            name: "Rhaegal targerian",
+            author: "Valar Morgolis"
+        })
+
+        expect(statusCode).toBe(201);
+        expect(body).toEqual({
+            name: "Rhaegal targerian",
+            author: "Valar Morgolis",
+            id: expect.any(Number)
+        })
+
+    })
+
 })
