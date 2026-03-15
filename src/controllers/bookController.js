@@ -45,3 +45,31 @@ exports.addBook = [
         }
     }
 ]
+
+exports.updateBook = [
+    check('name','Book name is required').not().isEmpty(),
+    check('author', 'Author na me is required').not().isEmpty(),
+
+    (req,res,next) => {
+        try{
+            const {id} = req.params;
+            const{name,author} = req.body;
+
+            const foundBook = bookData.find((book) => book.id === Number(id));
+
+            if(!foundBook){
+                return res.status(404).json({
+                    error: true,
+                    message: "Book not found!"
+                })
+            }
+
+            res.status(200).json({
+                message: "Book details updated successfully!"
+            })
+        }
+        catch(error){
+            next(error);
+        }
+    }
+]
