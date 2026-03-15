@@ -23,4 +23,23 @@ describe("Integration tests for the books API", () => {
         expect(statusCode).toBe(200);
     })
 
+    test("POST /api/books - failure on invalid post body", async() => {
+
+        const {body, statusCode} = await request(app).post("/api/books").send({
+            name: "",
+            author: "Kamala"
+        })
+
+        expect(statusCode).toBe(400);
+        expect(body).toEqual({
+            error: {
+                location: "body",
+                msg: "Book name is required",
+                param: "name",
+                value: ""
+            }
+        })
+
+    })
+
 })
