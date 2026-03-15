@@ -84,3 +84,29 @@ exports.updateBook = [
         }
     }
 ]
+
+exports.deleteBook = (req,res,next) => {
+    try{
+        const{id} = req.params;
+
+        if(id == null)return next(createError.BadRequest());
+
+        const foundBook = bookData.find((book) => book.id === Number(id));
+
+        if(!foundBook){
+            return res.status(404).json({
+                error: true,
+                message: "Book not found!"
+            })
+        }
+
+        let books = bookData.filter((book) => book.id != id);
+
+        res.status(200).json({
+            message: "Book deleted successfully!"
+        })
+    }
+    catch(error){
+        next(error);
+    }
+}

@@ -87,4 +87,27 @@ describe("Integration tests for the books API", () => {
         })
 
     })
+
+    test("DEL /api/books/:id - failure when the book is not found", async() => {
+
+        const {statusCode,body} = await request(app).del("/api/books/700");
+
+        expect(statusCode).toBe(404);
+        expect(body).toEqual({
+            error: true,
+            message: "Book not found!"
+        })
+
+    })
+
+    test("DEL /api/books/:id - success when the book is found", async() => {
+
+        const{statusCode,body} = await request(app).delete("/api/books/7");
+
+        expect(statusCode).toBe(200);
+        expect(body).toEqual({
+            message: "Book deleted successfully!"
+        })
+
+    })
 })
