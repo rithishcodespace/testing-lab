@@ -48,14 +48,14 @@ exports.addBook = [
 
 exports.updateBook = [
     check('name','Book name is required').not().isEmpty(),
-    check('author', 'Author name is required').not().isEmpty(),
+    check('author','Author name is required').not().isEmpty(),
 
     (req,res,next) => {
         try{
-            const {id} = req.params;
-            const{name,author} = req.body;
+            const { id } = req.params
+            const { name, author } = req.body
 
-            const foundBook = bookData.find((book) => book.id === Number(id));
+            const foundBook = bookData.find(book => book.id === Number(id))
 
             if(!foundBook){
                 return res.status(404).json({
@@ -64,12 +64,23 @@ exports.updateBook = [
                 })
             }
 
+            const updatedBooks = bookData.map(book => {
+                if(book.id === Number(id)){
+                    return {
+                        ...book,
+                        name,
+                        author
+                    }
+                }
+                return book
+            })
+
             res.status(200).json({
                 message: "Book details updated successfully!"
             })
-        }
-        catch(error){
-            next(error);
+
+        } catch(error){
+            next(error)
         }
     }
 ]
