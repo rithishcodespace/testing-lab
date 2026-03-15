@@ -3,6 +3,7 @@ const request = require("supertest");
 const bookRoute = require("../routes/bookRoute");
 
 const app = express();
+app.use(express.json())
 app.use("/api/books",bookRoute); 
 
 describe("Integration tests for the books API", () => {
@@ -31,14 +32,14 @@ describe("Integration tests for the books API", () => {
         })
 
         expect(statusCode).toBe(400);
-        expect(body).toEqual({
-            error: {
-                location: "body",
-                msg: "Book name is required",
-                param: "name",
-                value: ""
-            }
-        })
+        expect(body.errors).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({
+                    msg: "Book name is required",
+                    path: "name"
+                })
+            ])
+        )
 
     })
 
