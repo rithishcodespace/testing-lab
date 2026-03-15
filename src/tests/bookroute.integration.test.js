@@ -59,4 +59,11 @@ describe("Integration tests for the books API", () => {
 
     })
 
+    test("PUT /api/books:id - failure - when book is not found", async () => {
+        
+        const {body,statusCode} = await request(app).put("/api/books:7").send({
+            
+        })
+
+    })
 })
