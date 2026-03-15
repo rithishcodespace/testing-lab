@@ -48,7 +48,7 @@ exports.addBook = [
 
 exports.updateBook = [
     check('name','Book name is required').not().isEmpty(),
-    check('author', 'Author na me is required').not().isEmpty(),
+    check('author', 'Author name is required').not().isEmpty(),
 
     (req,res,next) => {
         try{
